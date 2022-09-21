@@ -107,5 +107,29 @@ namespace TestAlgorithm
             Assert.IsTrue(queue.Head() == 5);
             Assert.IsTrue(queue.Tail() == 14);
         }
+
+        [TestMethod]
+        public void TestPriorityQueue()
+        {
+            PriorityQueue<int> queue = new PriorityQueue<int>();
+
+            queue.Push(6);
+            queue.Push(10);
+            queue.Push(7);
+            queue.Push(5);
+            queue.Push(8);
+            queue.Push(1);
+            queue.Push(3);
+            queue.Push(4);
+            queue.Push(2);
+            queue.Push(9);
+
+
+            for(int i = 0; i < queue.Size; i++)
+            {
+                Assert.IsTrue(queue.Peek() == i+1);
+                Assert.IsTrue(queue.Pop() == i + 1);
+            }
+        }
     }
 }
