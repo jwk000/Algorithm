@@ -29,8 +29,14 @@ namespace Algorithm
      */
     public class Poker101
     {
+        public class Combo
+        {
+            public int type = 0;//1 顺子 2刻子
+            public int value = 0;//面值
+            public List<int> indexs;//手牌下标
+        }
 
-        public List<List<int>> BestHandCard(List<int> cards)
+        public List<Combo> BestHandCard(List<int> handcards)
         {
             //思路：穷举所有情况，判断最大牌型
             //先排序，方便查找相邻数字牌
@@ -38,13 +44,100 @@ namespace Algorithm
             //取cards[i]判断是否组成顺子S，是则取rs = S+max(s-Rest)
             //max(cards) = max(rk,rs)
 
-            cards.Sort();
+            handcards.Sort();
+            int[] cards = handcards.ToArray();
+            bool[] visited = new bool[handcards.Count];
 
-            int s = cards[0];
-
+            List<int> shunzi = FindShunziBeginWith(cards, visited, 0);
+            if (shunzi != null)
+            {
+                //检查每张牌是否可以组成刻子
+                foreach(var c in shunzi)
+                {
+                    var kezi = FindKeziBeginWith(cards, visited, c);
+                    if (kezi!=null && kezi.Count==3)
+                    {
+                        //组成
+                    }
+                }
+            }
 
             return null;
         }
+
+        public List<Combo> MaxCombos(int[] cards, bool[] visited)
+        {
+            return null;
+        }
+
+        List<int> FindShunziBeginWith(int[] cards, bool[] visited, int index)
+        {
+            List<int> ret = new List<int>(8);
+            ret.Add(index);
+            int card = cards[index];
+            int next = CalcNextShunzi(card);
+            int j = index;
+            while (++j < cards.Length)
+            {
+                if (cards[j] == next && !visited[j])
+                {
+                    visited[j] = true;
+                    ret.Add(j);
+                    next = CalcNextShunzi(next);
+                }
+                else if (cards[j] % 100 > next % 100)
+                {
+                    break;
+                }
+            }
+            if (ret.Count >= 3)
+            {
+                return ret;
+            }
+            return null;
+        }
+
+        List<int> FindKeziBeginWith(int[] cards, bool[] visited, int index)
+        {
+            List<int> ret = new List<int>(8);
+            ret.Add(index);
+            int card = cards[index];
+            int j = index;
+            while (++j < cards.Length)
+            {
+                if (cards[j] % 100 == card % 100)
+                {
+                    if (!ret.Contains(cards[j]))
+                    {
+                        visited[j] = true;
+                        ret.Add(j);
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            }
+            if (ret.Count >= 3)
+            {
+                return ret;
+            }
+            return null;
+        }
+
+
+
+        int CalcNextShunzi(int card)
+        {
+            int color = card / 100;
+            int number = card % 100;
+            if (number == 13) return 0;
+            int ret = color * 100 + number + 1;
+            return ret;
+        }
+
+
+
 
         Dictionary<HandCardStatus, Result> mCache = new Dictionary<HandCardStatus, Result>();
 
