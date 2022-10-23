@@ -11,7 +11,7 @@ namespace Algorithm
     //在w*h的矩形里采样n个点
     public class Sample
     {
-        MyRandom mRandor = new MyRandom();
+        Random_MersenneTwister mRandor = new Random_MersenneTwister();
 
         //均匀随机采样
         public List<Point> RandomSample(int width, int height, int num)
