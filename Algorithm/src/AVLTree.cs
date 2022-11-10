@@ -484,6 +484,7 @@ namespace Algorithm
             return sb.ToString();
         }
 
+        #region 迭代器
         public IEnumerator<int> GetEnumerator()
         {
             return new AVLTreeEnumerator(this);
@@ -544,6 +545,9 @@ namespace Algorithm
                     p = p.Left;
                 }
             }
+
         }
+            
+        #endregion
     }
 }
