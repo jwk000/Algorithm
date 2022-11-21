@@ -55,7 +55,7 @@ namespace Algorithm
             return ret;
         }
 
-        //TODO 四叉树优化
+        //TODO K-D树优化
         int FindClosest(List<Point> samples, Point p)
         {
             Point closest = samples[0];
