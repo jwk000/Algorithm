@@ -33,6 +33,9 @@
             this.randomSampleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.michelSampleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.poissonSampleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.treeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.kdtreeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -40,7 +43,9 @@
             // 
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.sampleToolStripMenuItem});
+            this.sampleToolStripMenuItem,
+            this.treeToolStripMenuItem,
+            this.graphToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(800, 28);
@@ -78,6 +83,27 @@
             this.poissonSampleToolStripMenuItem.Text = "poisson sample";
             this.poissonSampleToolStripMenuItem.Click += new System.EventHandler(this.poissonSampleToolStripMenuItem_Click);
             // 
+            // treeToolStripMenuItem
+            // 
+            this.treeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.kdtreeToolStripMenuItem});
+            this.treeToolStripMenuItem.Name = "treeToolStripMenuItem";
+            this.treeToolStripMenuItem.Size = new System.Drawing.Size(53, 24);
+            this.treeToolStripMenuItem.Text = "tree";
+            // 
+            // kdtreeToolStripMenuItem
+            // 
+            this.kdtreeToolStripMenuItem.Name = "kdtreeToolStripMenuItem";
+            this.kdtreeToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.kdtreeToolStripMenuItem.Text = "kdtree";
+            this.kdtreeToolStripMenuItem.Click += new System.EventHandler(this.kdtreeToolStripMenuItem_Click);
+            // 
+            // graphToolStripMenuItem
+            // 
+            this.graphToolStripMenuItem.Name = "graphToolStripMenuItem";
+            this.graphToolStripMenuItem.Size = new System.Drawing.Size(66, 24);
+            this.graphToolStripMenuItem.Text = "graph";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -101,5 +127,8 @@
         private ToolStripMenuItem michelSampleToolStripMenuItem;
         private ToolStripMenuItem poissonSampleToolStripMenuItem;
         private ToolStripMenuItem randomSampleToolStripMenuItem;
+        private ToolStripMenuItem treeToolStripMenuItem;
+        private ToolStripMenuItem kdtreeToolStripMenuItem;
+        private ToolStripMenuItem graphToolStripMenuItem;
     }
 }

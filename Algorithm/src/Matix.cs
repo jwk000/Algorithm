@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Algorithm.src
 {
     //矩阵
-    internal class Matrix
+    public class MyMatrix
     {
         //转置
         void Transmit()
@@ -22,7 +22,7 @@ namespace Algorithm.src
         }
 
         //加法
-        public static Matrix operator+(Matrix lhs, Matrix rhs)
+        public static MyMatrix operator+(MyMatrix lhs, MyMatrix rhs)
         {
             return lhs;
         }
