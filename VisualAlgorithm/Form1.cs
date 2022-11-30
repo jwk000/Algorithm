@@ -12,7 +12,7 @@ namespace VisualAlgorithm
             this.BackColor = Color.White;
         }
 
-        Action<Graphics> mDrawAction;
+        Action<Graphics> mDrawAction = null;
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);

@@ -84,5 +84,25 @@ namespace Algorithm
         {
             return $"{X},{Y},{Z}";
         }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(obj, null))
+            {
+                return false;
+            }
+
+            return this == (MyVector3)obj;
+        }
+
+        public override int GetHashCode()
+        {
+            return (int)(X * 100000000 + Y*10000+Z);
+        }
     }
 }
