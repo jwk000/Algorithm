@@ -15,40 +15,104 @@ namespace Algorithm
      */
     public class BM
     {
-        int[] good;
+        int[] good;//下标是好后缀的长度，值是好后缀在模式串上次出现的位置
         int[] bad;
         string pattern;
 
         public BM(string pattern)
         {
-            calcGoodTable(pattern);
-            calcBadTable(pattern);
+            this.pattern = pattern;
+            buildGoodTable(pattern);
+            buildBadTable(pattern);
         }
 
-        void calcGoodTable(string pattern)
+        void buildGoodTable(string pattern)
         {
+            good = new int[pattern.Length];
+            
+            good[0] = 1;//匹配好后缀长度=0则移动一步
 
+
+            for(int len = 1; len < pattern.Length - 1; len++)
+            {
+                int idx = -1;
+                for(int i = pattern.Length - 2; i >= len; i--)
+                {
+                    bool match = true;
+                    for(int j = 0; j < len; j++)
+                    {
+
+                        if(pattern[i-j] != pattern[pattern.Length - 1 - j])
+                        {
+                            match = false;
+                            break;
+                        }
+                    }
+                    if (match)
+                    {
+                        idx = i;
+                        break;
+                    }
+                }
+                if (idx >= 0)
+                {
+                    good[len] = pattern.Length- idx-1;
+                }
+            }
+
+            int lastk = 0;
+            for(int k = 0; k < pattern.Length; k++)
+            {
+                if (good[k] == 0)
+                {
+                    good[k] = good[lastk];//k是pattern和text的匹配后缀长度，如果k不是好后缀则取上一个好后缀
+                }
+                else
+                {
+                    lastk = k;
+                }
+            }
         }
 
-        void calcBadTable(string pattern)
+  
+        //只有最后一个字符不匹配的时候坏字符规则才有意义
+        void buildBadTable(string pattern)
         {
 
+            bad = new int[26];//取一个字节的所有情况
+            for(int i = 0; i < 26; i++)
+            {
+                bad[i] = pattern.Length;//如果坏字节没有在pattern出现，跳过length
+            }
+            for(int i = 0; i < pattern.Length; i++)
+            {
+                bad[pattern[i]-'a'] = pattern.Length - i - 1;//坏字符最右出现的位置
+            }
         }
 
         public int Search(string text)
         {
             int skip = 0;
-            for(int i = 0; i < text.Length - pattern.Length; i += skip)
+            for(int i = pattern.Length-1; i < text.Length ; i += skip)
             {
                 int j = pattern.Length - 1;
-                for (; j >= 0; j--)
+                int k = 0;
+                for (; j >= 0; j--,k++)
                 {
-                    if (pattern[j] != text[i + j])
+                    if (pattern[j] != text[i-k])
                     {
-                        skip = Math.Max(good[j], bad[j]);
+                        if (j == pattern.Length - 1)
+                        {
+                            skip = bad[text[j] - 'a'];
+                        }
+                        else
+                        {
+                            skip = good[k];
+                        }
+                        break;
                     }
+                    if (j == 0) return i-k;
                 }
-                if (j == 0) return i;
             }
             return -1;
         }
