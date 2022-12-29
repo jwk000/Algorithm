@@ -393,7 +393,8 @@ namespace AStar
                 g.searched = false;
             }
             List<Grid> path = new List<Grid>();
-            List<Grid> open = new List<Grid>();
+            List<Grid> open = new List<Grid>();//正在探索的格子
+            HashSet<Grid> close = new HashSet<Grid>();//探索完的格子
             startGrid.G = 0;
             startGrid.H = calcH2(startGrid);
             startGrid.F = startGrid.G + startGrid.H;
@@ -404,6 +405,7 @@ namespace AStar
                 open.Sort((a, b) => a.F - b.F);
                 var g = open[0];
                 open.Remove(g);
+                close.Add(g);
                 if (g == endGrid)
                 {
                     path.Add(g);
@@ -414,6 +416,7 @@ namespace AStar
                     }
                     break;
                 }
+                //寻找可行走的邻接格子，不能在close集合中
                 List<Grid> round = new List<Grid>();
                 for (int i = -1; i <= 1; i++)
                 {
@@ -423,7 +426,7 @@ namespace AStar
                         if (x >= 0 && x < ColNum && y >= 0 && y < RowNum)
                         {
                             var grid = AllGrids[x, y];
-                            if (grid != g && grid.type != GridType.Block)
+                            if (grid != g && grid.type != GridType.Block && !close.Contains(grid))//不在close集合
                             {
                                 round.Add(grid);
                             }
@@ -432,10 +435,15 @@ namespace AStar
                 }
                 foreach (var r in round)
                 {
-                    int G = g.G + 1;
+                    int value = 14;
+                    if (g.X == r.X || g.Y == r.Y)
+                    {
+                        value = 10;
+                    }
+                    int G = g.G + value;
                     int H = calcH2(r);
                     int F = G + H;
-                    if (r.searched && r.F > F)
+                    if (r.searched && r.F > F)//从g移动到r比原来非g移动到r更短则修改parent
                     {
                         r.G = G;
                         r.H = H;
@@ -458,6 +466,7 @@ namespace AStar
 
             if (path.Count > 0)
             {
+                path.Reverse();
                 ThePath = path.Select(g => new Point(g.rect.X + GridSize / 2, g.rect.Y + GridSize / 2)).ToArray();
             }
             Invalidate();
@@ -487,7 +496,89 @@ namespace AStar
         #region Djkstra
         private void djkstraToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            RunDjkstra();
+        }
 
+        void RunDjkstra()
+        {
+            foreach (var g in AllGrids)
+            {
+                g.searched = false;
+            }
+            List<Grid> path = new List<Grid>();
+            List<Grid> open = new List<Grid>();
+            HashSet<Grid> close = new HashSet<Grid>();
+
+            startGrid.searched = true;
+            open.Add(startGrid);
+            while (open.Count > 0)
+            {
+                open.Sort((a, b) => a.G - b.G);
+                var g = open[0];
+                open.Remove(g);
+                close.Add(g);
+                
+                if (g == endGrid)
+                {
+                    path.Add(g);
+                    while (g.parent != null)
+                    {
+                        g = g.parent;
+                        path.Add(g);
+                    }
+                    break;
+                }
+
+
+                //寻找g周围可行走的邻接格子，不能在open集合中
+                List<Grid> round = new List<Grid>();
+                for (int i = -1; i <= 1; i++)
+                {
+                    for (int j = -1; j <= 1; j++)
+                    {
+                        int x = g.X + i, y = g.Y + j;
+                        if (x >= 0 && x < ColNum && y >= 0 && y < RowNum)
+                        {
+                            var grid = AllGrids[x, y];
+                            if (grid != g && grid.type != GridType.Block && !close.Contains(grid))
+                            {
+                                round.Add(grid);
+                            }
+                        }
+                    }
+                }
+
+                foreach (var r in round)
+                {
+                    int value = 14;
+                    if (g.X == r.X || g.Y == r.Y)
+                    {
+                        value = 10;
+                    }
+                    int G = g.G + value;
+                    if (r.searched && r.G > G)//从g移动到r比原来非g移动到r更短则修改parent
+                    {
+                        r.G = G;
+                        r.parent = g;
+                    }
+
+                    if (!r.searched)
+                    {
+                        r.G = G;
+                        r.parent = g;
+                        r.searched = true;
+
+                        open.Add(r);
+                    }
+                }
+            }
+
+            if (path.Count > 0)
+            {
+                path.Reverse();
+                ThePath = path.Select(g => new Point(g.rect.X + GridSize / 2, g.rect.Y + GridSize / 2)).ToArray();
+            }
+            Invalidate();
         }
 
         #endregion

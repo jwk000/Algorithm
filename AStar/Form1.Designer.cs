@@ -45,8 +45,8 @@
             this.dFSToolStripMenuItem,
             this.bFSToolStripMenuItem,
             this.bestFitToolStripMenuItem,
-            this.aToolStripMenuItem,
             this.djkstraToolStripMenuItem,
+            this.aToolStripMenuItem,
             this.jPSToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
