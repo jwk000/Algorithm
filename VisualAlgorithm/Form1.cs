@@ -111,5 +111,12 @@ namespace VisualAlgorithm
             g.FillEllipse(Brushes.Brown, point.X - 2, point.Y - 2, 4, 4);
             g.DrawString(node.data.ToString(), SystemFonts.DefaultFont, Brushes.Brown, point.X + 10, point.Y - 2);
         }
+
+
+        PathFinder mPathFinderForm = new PathFinder();
+        private void pathfinderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            mPathFinderForm.Show();
+        }
     }
 }

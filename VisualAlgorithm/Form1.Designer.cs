@@ -36,6 +36,7 @@
             this.treeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.kdtreeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.graphToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pathfinderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -45,7 +46,8 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sampleToolStripMenuItem,
             this.treeToolStripMenuItem,
-            this.graphToolStripMenuItem});
+            this.graphToolStripMenuItem,
+            this.pathfinderToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(800, 28);
@@ -104,6 +106,13 @@
             this.graphToolStripMenuItem.Size = new System.Drawing.Size(66, 24);
             this.graphToolStripMenuItem.Text = "graph";
             // 
+            // pathfinderToolStripMenuItem
+            // 
+            this.pathfinderToolStripMenuItem.Name = "pathfinderToolStripMenuItem";
+            this.pathfinderToolStripMenuItem.Size = new System.Drawing.Size(99, 24);
+            this.pathfinderToolStripMenuItem.Text = "pathfinder";
+            this.pathfinderToolStripMenuItem.Click += new System.EventHandler(this.pathfinderToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -130,5 +139,6 @@
         private ToolStripMenuItem treeToolStripMenuItem;
         private ToolStripMenuItem kdtreeToolStripMenuItem;
         private ToolStripMenuItem graphToolStripMenuItem;
+        private ToolStripMenuItem pathfinderToolStripMenuItem;
     }
 }

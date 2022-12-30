@@ -81,5 +81,12 @@ namespace Algorithm
         {
             return a * (1 - w) + b * w;
         }
+
+        public static int clamp(int v, int min, int max)
+        {
+            return v < min ? min : v > max ? max : v;
+        }
+
+
     }
 }

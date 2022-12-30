@@ -309,7 +309,29 @@ namespace Algorithm
                     }
                 }
             }
+        }
 
+        public void Update(T e)
+        {
+            int idx = mQueue.IndexOf(e);
+            if (idx < 0) return;
+            int parentIdx = (idx - 1) / 2;
+            while (parentIdx < idx)
+            {
+                //比父节点小
+                if (mQueue[idx].CompareTo(mQueue[parentIdx]) < 0)
+                {
+                    T t = mQueue[parentIdx];
+                    mQueue[parentIdx] = mQueue[idx];
+                    mQueue[idx] = t;
+                    idx = parentIdx;
+                    parentIdx = (idx - 1) / 2;
+                }
+                else
+                {
+                    break;
+                }
+            }
         }
 
         public T Peek()
@@ -331,6 +353,11 @@ namespace Algorithm
             //尾节点放入头节点
             T tail = mQueue.Last();
             mQueue.RemoveAt(mQueue.Count - 1);
+            if (mQueue.Count == 0)
+            {
+                return head;
+            }
+
             mQueue[0] = tail;
             int idx = 0;
             while (idx < mQueue.Count)
