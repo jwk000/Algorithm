@@ -843,6 +843,7 @@ namespace VisualAlgorithm
             var leftup = GetGrid(current.X - Dx, current.Y + Dy);
             var rightup = GetGrid(current.X + Dx, current.Y + Dy);
             var rightdown = GetGrid(current.X + Dx, current.Y - Dy);
+            var forward = rightup;
 
             if (Dx != 0 && Dy != 0)//对角方向
             {
@@ -888,7 +889,7 @@ namespace VisualAlgorithm
             }
 
             //前进方向寻找跳点（横向只会沿着横向找，纵向之后沿着纵向找，对角只会沿着对角找）
-            return Jump(rightup, current);
+            return Jump(forward, current);
         }
 
         #endregion

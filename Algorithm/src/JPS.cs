@@ -260,6 +260,12 @@ namespace Algorithm
                     if (IsWalkable(up))
                     {
                         ret.Add(up);
+
+                        right = GetGrid(current.X + 1, current.Y);
+                        rightup = GetGrid(current.X + 1, current.Y + Dy);
+                        left = GetGrid(current.X - 1, current.Y);
+                        leftup = GetGrid(current.X - 1, current.Y + Dy);
+
                         if (!IsWalkable(right) && IsWalkable(rightup))
                         {
                             ret.Add(rightup);
@@ -275,6 +281,12 @@ namespace Algorithm
                     if (IsWalkable(right))
                     {
                         ret.Add(right);
+
+                        up = GetGrid(current.X, current.Y + 1);
+                        rightup = GetGrid(current.X + Dx, current.Y + 1);
+                        down = GetGrid(current.X, current.Y - 1);
+                        rightdown = GetGrid(current.X + Dx, current.Y - 1);
+
                         if (!IsWalkable(up) && IsWalkable(rightup))
                         {
                             ret.Add(rightup);
@@ -312,6 +324,7 @@ namespace Algorithm
             var leftup = GetGrid(current.X - Dx, current.Y + Dy);
             var rightup = GetGrid(current.X + Dx, current.Y + Dy);
             var rightdown = GetGrid(current.X + Dx, current.Y - Dy);
+            var forward = rightup;
 
             if (Dx != 0 && Dy != 0)//对角方向
             {
@@ -333,6 +346,11 @@ namespace Algorithm
             }
             else if (Dx == 0)// 纵向
             {
+                right = GetGrid(current.X + 1, current.Y);
+                rightup = GetGrid(current.X + 1, current.Y + Dy);
+                left = GetGrid(current.X - 1, current.Y);
+                leftup = GetGrid(current.X - 1, current.Y + Dy);
+
                 //强迫邻居
                 if ((!IsWalkable(right) && IsWalkable(rightup)) || (!IsWalkable(left) && IsWalkable(leftup)))
                 {
@@ -341,6 +359,11 @@ namespace Algorithm
             }
             else //横向
             {
+                up = GetGrid(current.X, current.Y + 1);
+                rightup = GetGrid(current.X + Dx, current.Y + 1);
+                down = GetGrid(current.X, current.Y - 1);
+                rightdown = GetGrid(current.X + Dx, current.Y - 1);
+
                 //强迫邻居
                 if ((!IsWalkable(up) && IsWalkable(rightup)) || (!IsWalkable(down) && IsWalkable(rightdown)))
                 {
@@ -349,7 +372,7 @@ namespace Algorithm
             }
 
             //前进方向寻找跳点（横向只会沿着横向找，纵向之后沿着纵向找，对角只会沿着对角找）
-            return Jump(rightup, current);
+            return Jump(forward, current);
         }
     }
 }
