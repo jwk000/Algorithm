@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Algorithm
 {
     /*
-     * 图，用邻接链表表示的图
+     * 有向无环图，用邻接链表表示
      * 
      */
     public partial class Graph
