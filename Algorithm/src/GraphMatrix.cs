@@ -18,6 +18,7 @@ namespace Algorithm
         int[,] G;
         int N;
 
+
         //具有Num个顶点的图
         public GraphMatrix(int vertexNum)
         {
@@ -40,7 +41,7 @@ namespace Algorithm
             return G[i, j];
         }
 
-        //i和j是否连通
+        //i和j是否连通，递归遍历低效实现，已使用并查集替换
         public bool CanReach(int i, int j)
         {
             List<int> visited = new List<int>();
@@ -158,6 +159,7 @@ namespace Algorithm
         }
         public GraphMatrix MiniSpanTreeKruskal()
         {
+            var D = new DisjointedSet(N);
             List<Edge> edges = new List<Edge>();
             for (int i = 0; i < N; i++)
             {
@@ -176,12 +178,12 @@ namespace Algorithm
             {
                 Edge e = edges[0];
                 edges.RemoveAt(0);
-                if (ret.CanReach(e.A, e.B))
+                if (D.Query(e.A,e.B))//ret.CanReach(e.A, e.B)
                 {
                     continue;
                 }
                 ret.AddEdge(e.A, e.B, e.W);
-
+                D.Union(e.A, e.B);
             }
 
             return ret;
