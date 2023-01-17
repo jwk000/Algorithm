@@ -37,6 +37,15 @@ namespace Algorithm
 
         }
 
+        //单位矩阵
+        public static readonly Matrix4x4 Identify = new Matrix4x4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+
+        public Matrix4x4 Clone()
+        {
+            return new Matrix4x4(m11, m12, m13, m14, m21, m22, m23, m24, m31, m32, m33, m34, m41, m42, m43, m44);
+        }
+
+
         //转置
         public void Transpose()
         {
@@ -171,6 +180,19 @@ namespace Algorithm
                 lhs.m43 == rhs.m43 &&
                 lhs.m44 == rhs.m44;
 
+        }
+
+        //矩阵快速幂
+        public static Matrix4x4 operator ^(Matrix4x4 mat, int n)
+        {
+            Matrix4x4 ans = Identify;
+            while (n > 0)
+            {
+                if ((n & 1) == 1) ans *= mat;
+                mat *= mat;
+                n >>= 1;
+            }
+            return ans;
         }
 
         public static bool operator !=(Matrix4x4 lhs, Matrix4x4 rhs)

@@ -87,6 +87,46 @@ namespace Algorithm
             return v < min ? min : v > max ? max : v;
         }
 
+        //快速幂，求a的n次方，对n二进制分解，最多32个因子
+        public static float qpow(float a, int n)
+        {
+            float ans = 1;
+            while (n > 0)
+            {
+                if ((n & 1) > 0)
+                {
+                    ans *= a;
+                }
+                a *= a;
+                n >>= 1;
+            }
+            return ans;
+        }
 
+        //龟速乘，用加法实现乘法，为了防止大数乘法溢出，每次加法之后取模
+        public static long qmul(long a,long b,long M)
+        {
+            long ans = 0;
+            while (b > 0)
+            {
+                if ((b & 1) == 1) ans = (ans + a) % M;
+                a = (a + a) % M;
+                b >>= 1;
+            }
+            return ans;
+        }
+
+        static MyRandom _randor = new MyRandom();
+        //打乱数组
+        public static void shuffle(int[] arr)
+        {
+            for(int i = arr.Length - 1; i > 0; i--)
+            {
+                int r = _randor.Next(0, i);
+                int t = arr[i];
+                arr[i] = arr[r];
+                arr[r] = t;
+            }
+        }
     }
 }

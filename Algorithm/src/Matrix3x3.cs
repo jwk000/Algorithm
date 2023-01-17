@@ -29,6 +29,15 @@ namespace Algorithm
             this.m33 = m33;
         }
 
+        //单位矩阵
+        public static readonly Matrix3x3 Identify = new Matrix3x3(1, 0, 0, 0, 1, 0, 0, 0, 1);
+
+        public Matrix3x3 Clone()
+        {
+            return new Matrix3x3(m11, m12, m13, m21, m22, m23, m31, m32, m33);
+        }
+
+
         //转置
         public void Transpose()
         {
@@ -112,6 +121,19 @@ namespace Algorithm
         public static Matrix3x3 operator *(Matrix3x3 lhs, float f)
         {
             return new Matrix3x3(lhs.m11 * f, lhs.m12 * f, lhs.m13 * f,  lhs.m21 * f, lhs.m22 * f, lhs.m23 * f, lhs.m31 * f, lhs.m32 * f, lhs.m33 * f);
+        }
+
+        //矩阵快速幂
+        public static Matrix3x3 operator^(Matrix3x3 mat,int n)
+        {
+            Matrix3x3 ans = Identify;
+            while (n > 0)
+            {
+                if ((n & 1) == 1) ans *= mat;
+                mat *= mat;
+                n >>= 1;
+            }
+            return ans;
         }
 
         //相等
