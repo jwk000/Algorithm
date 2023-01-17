@@ -85,15 +85,15 @@ namespace VisualAlgorithm
 
         private void kdtreeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            List<Vector2> input = new List<Vector2>();
-            input.Add(new Vector2(3.5f, 4.5f));
-            input.Add(new Vector2(1.5f, 6.5f));
-            input.Add(new Vector2(2f, 4f));
-            input.Add(new Vector2(5f, 3f));
-            input.Add(new Vector2(3f, 2f));
-            input.Add(new Vector2(6f, 1f));
-            input.Add(new Vector2(1f, 2.2f));
-            input.Add(new Vector2(7f, 4.5f));
+            List<System.Numerics.Vector2> input = new List<System.Numerics.Vector2>();
+            input.Add(new System.Numerics.Vector2(3.5f, 4.5f));
+            input.Add(new System.Numerics.Vector2(1.5f, 6.5f));
+            input.Add(new System.Numerics.Vector2(2f, 4f));
+            input.Add(new System.Numerics.Vector2(5f, 3f));
+            input.Add(new System.Numerics.Vector2(3f, 2f));
+            input.Add(new System.Numerics.Vector2(6f, 1f));
+            input.Add(new System.Numerics.Vector2(1f, 2.2f));
+            input.Add(new System.Numerics.Vector2(7f, 4.5f));
 
             KDTree kdtree = new KDTree();
             kdtree.Build(input);

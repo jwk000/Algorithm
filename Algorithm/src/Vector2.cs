@@ -6,66 +6,66 @@ using System.Threading.Tasks;
 
 namespace Algorithm
 {
-    public class MyVector2
+    public class Vector2
     {
         public float X;
         public float Y;
 
-        public MyVector2(float x, float y)
+        public Vector2(float x, float y)
         {
             X = x;
             Y = y;
         }
 
-        public static float Dot(MyVector2 u, MyVector2 v)
+        public static float Dot(Vector2 u, Vector2 v)
         {
             return u.X * v.X + u.Y * v.Y;
         }
 
-        public static MyVector2 operator +(MyVector2 u, MyVector2 v)
+        public static Vector2 operator +(Vector2 u, Vector2 v)
         {
-            return new MyVector2(u.X + v.X, u.Y + v.Y);
+            return new Vector2(u.X + v.X, u.Y + v.Y);
         }
 
-        public static MyVector2 operator -(MyVector2 u, MyVector2 v)
+        public static Vector2 operator -(Vector2 u, Vector2 v)
         {
-            return new MyVector2(u.X - v.X, u.Y - v.Y);
+            return new Vector2(u.X - v.X, u.Y - v.Y);
         }
 
-        public static MyVector2 operator *(MyVector2 u, MyVector2 v)
+        public static Vector2 operator *(Vector2 u, Vector2 v)
         {
-            return new MyVector2(u.X * v.X, u.Y * v.Y);
+            return new Vector2(u.X * v.X, u.Y * v.Y);
         }
-        public static MyVector2 operator *(float f, MyVector2 v)
+        public static Vector2 operator *(float f, Vector2 v)
         {
-            return new MyVector2(f * v.X, f * v.Y);
+            return new Vector2(f * v.X, f * v.Y);
         }
-        public static MyVector2 operator *(MyVector2 u, float f)
+        public static Vector2 operator *(Vector2 u, float f)
         {
-            return new MyVector2(u.X * f, u.Y * f);
+            return new Vector2(u.X * f, u.Y * f);
         }
-        public static MyVector2 operator /(MyVector2 u, MyVector2 v)
+        public static Vector2 operator /(Vector2 u, Vector2 v)
         {
-            return new MyVector2(u.X / v.X, u.Y / v.Y);
+            return new Vector2(u.X / v.X, u.Y / v.Y);
         }
-        public static MyVector2 operator /(MyVector2 u, float f)
+        public static Vector2 operator /(Vector2 u, float f)
         {
-            return new MyVector2(u.X / f, u.Y / f);
+            return new Vector2(u.X / f, u.Y / f);
         }
 
-        public static bool operator ==(MyVector2 u, MyVector2 v)
+        public static bool operator ==(Vector2 u, Vector2 v)
         {
             return u.X == v.X && u.Y == v.Y;
         }
-        public static bool operator !=(MyVector2 u, MyVector2 v)
+        public static bool operator !=(Vector2 u, Vector2 v)
         {
             return u.X != v.X || u.Y != v.Y;
         }
 
-        public MyVector2 Normalize()
+        public Vector2 Normalize()
         {
             float len = Length();
-            return new MyVector2(X / len, Y / len);
+            return new Vector2(X / len, Y / len);
         }
 
         public float Length()
@@ -90,7 +90,7 @@ namespace Algorithm
                 return false;
             }
 
-            return this == (MyVector2)obj;
+            return this == (Vector2)obj;
         }
 
         public override int GetHashCode()

@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 namespace Algorithm
 {
     //矩阵
-    public class Matrix4
+    public class Matrix4x4
     {
         public float m11, m12, m13, m14, m21, m22, m23, m24, m31, m32, m33, m34, m41, m42, m43, m44;
 
-        public Matrix4()
+        public Matrix4x4()
         {
 
         }
 
-        public Matrix4(float m11, float m12, float m13, float m14, float m21, float m22, float m23, float m24, float m31, float m32, float m33, float m34, float m41, float m42, float m43, float m44)
+        public Matrix4x4(float m11, float m12, float m13, float m14, float m21, float m22, float m23, float m24, float m31, float m32, float m33, float m34, float m41, float m42, float m43, float m44)
         {
             this.m11 = m11;
             this.m12 = m12;
@@ -45,9 +45,9 @@ namespace Algorithm
 
 
         //加法
-        public static Matrix4 operator +(Matrix4 lhs, Matrix4 rhs)
+        public static Matrix4x4 operator +(Matrix4x4 lhs, Matrix4x4 rhs)
         {
-            return new Matrix4(
+            return new Matrix4x4(
                 lhs.m11 + rhs.m11,
                 lhs.m12 + rhs.m12,
                 lhs.m13 + rhs.m13,
@@ -67,9 +67,9 @@ namespace Algorithm
                 );
         }
         //减法
-        public static Matrix4 operator -(Matrix4 lhs, Matrix4 rhs)
+        public static Matrix4x4 operator -(Matrix4x4 lhs, Matrix4x4 rhs)
         {
-            return new Matrix4(
+            return new Matrix4x4(
                 lhs.m11 - rhs.m11,
                 lhs.m12 - rhs.m12,
                 lhs.m13 - rhs.m13,
@@ -89,9 +89,9 @@ namespace Algorithm
                 );
         }
         //负号
-        public static Matrix4 operator -(Matrix4 lhs)
+        public static Matrix4x4 operator -(Matrix4x4 lhs)
         {
-            return new Matrix4(
+            return new Matrix4x4(
                 -lhs.m11,
                 -lhs.m12,
                 -lhs.m13,
@@ -111,9 +111,9 @@ namespace Algorithm
                 );
         }
         //乘法
-        public static Matrix4 operator *(Matrix4 lhs, Matrix4 rhs)
+        public static Matrix4x4 operator *(Matrix4x4 lhs, Matrix4x4 rhs)
         {
-            return new Matrix4(
+            return new Matrix4x4(
                 lhs.m11 * rhs.m11 + lhs.m12 * rhs.m21 + lhs.m13 * rhs.m31 + lhs.m14 * rhs.m41,
                 lhs.m11 * rhs.m12 + lhs.m12 * rhs.m22 + lhs.m13 * rhs.m32 + lhs.m14 * rhs.m42,
                 lhs.m11 * rhs.m13 + lhs.m12 * rhs.m23 + lhs.m13 * rhs.m33 + lhs.m14 * rhs.m43,
@@ -135,9 +135,9 @@ namespace Algorithm
         }
 
         //乘以向量
-        public static MyVector4 operator *(Matrix4 lhs, MyVector4 rhs)
+        public static Vector4 operator *(Matrix4x4 lhs, Vector4 rhs)
         {
-            return new MyVector4(
+            return new Vector4(
                 lhs.m11 * rhs.X + lhs.m12 * rhs.Y + lhs.m13 * rhs.Z + lhs.m14 * rhs.W,
                 lhs.m21 * rhs.X + lhs.m22 * rhs.Y + lhs.m23 * rhs.Z + lhs.m24 * rhs.W,
                 lhs.m31 * rhs.X + lhs.m32 * rhs.Y + lhs.m33 * rhs.Z + lhs.m34 * rhs.W,
@@ -145,12 +145,13 @@ namespace Algorithm
         }
 
         //乘以标量
-        public static Matrix4 operator *(Matrix4 lhs, float f)
+        public static Matrix4x4 operator *(Matrix4x4 lhs, float f)
         {
-            return new Matrix4(lhs.m11 * f, lhs.m12 * f, lhs.m13 * f, lhs.m14 * f, lhs.m21 * f, lhs.m22 * f, lhs.m23 * f, lhs.m24 * f, lhs.m31 * f, lhs.m32 * f, lhs.m33 * f, lhs.m34 * f, lhs.m41 * f, lhs.m42 * f, lhs.m43 * f, lhs.m44 * f);
+            return new Matrix4x4(lhs.m11 * f, lhs.m12 * f, lhs.m13 * f, lhs.m14 * f, lhs.m21 * f, lhs.m22 * f, lhs.m23 * f, lhs.m24 * f, lhs.m31 * f, lhs.m32 * f, lhs.m33 * f, lhs.m34 * f, lhs.m41 * f, lhs.m42 * f, lhs.m43 * f, lhs.m44 * f);
         }
 
-        public static bool operator ==(Matrix4 lhs, Matrix4 rhs)
+        //相等
+        public static bool operator ==(Matrix4x4 lhs, Matrix4x4 rhs)
         {
             return
                 lhs.m11 == rhs.m11 &&
@@ -172,7 +173,7 @@ namespace Algorithm
 
         }
 
-        public static bool operator !=(Matrix4 lhs, Matrix4 rhs)
+        public static bool operator !=(Matrix4x4 lhs, Matrix4x4 rhs)
         {
             return !(lhs == rhs);
         }
@@ -188,7 +189,7 @@ namespace Algorithm
             {
                 return false;
             }
-            var rhs = obj as Matrix4;
+            var rhs = obj as Matrix4x4;
             if (rhs == null) return false;
             return this == rhs;
         }

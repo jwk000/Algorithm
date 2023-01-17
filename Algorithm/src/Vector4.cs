@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Algorithm
 {
-    public class MyVector4
+    public class Vector4
     {
         public float X;
         public float Y;
         public float Z;
         public float W;
 
-        public MyVector4(float x, float y, float z, float w)
+        public Vector4(float x, float y, float z, float w)
         {
             X = x;
             Y = y;
@@ -21,55 +21,55 @@ namespace Algorithm
             W = w;
         }
 
-        public static float Dot(MyVector4 u, MyVector4 v)
+        public static float Dot(Vector4 u, Vector4 v)
         {
             return u.X * v.X + u.Y * v.Y + u.Z * v.Z + u.W * v.W;
         }
 
-        public static MyVector4 operator +(MyVector4 u, MyVector4 v)
+        public static Vector4 operator +(Vector4 u, Vector4 v)
         {
-            return new MyVector4(u.X + v.X, u.Y + v.Y, u.Z + v.Z, u.W + v.W);
+            return new Vector4(u.X + v.X, u.Y + v.Y, u.Z + v.Z, u.W + v.W);
         }
 
-        public static MyVector4 operator -(MyVector4 u, MyVector4 v)
+        public static Vector4 operator -(Vector4 u, Vector4 v)
         {
-            return new MyVector4(u.X - v.X, u.Y - v.Y, u.Z - v.Z, u.W - v.W);
+            return new Vector4(u.X - v.X, u.Y - v.Y, u.Z - v.Z, u.W - v.W);
         }
 
-        public static MyVector4 operator *(MyVector4 u, MyVector4 v)
+        public static Vector4 operator *(Vector4 u, Vector4 v)
         {
-            return new MyVector4(u.X * v.X, u.Y * v.Y, u.Z * v.Z, u.W * v.W);
+            return new Vector4(u.X * v.X, u.Y * v.Y, u.Z * v.Z, u.W * v.W);
         }
-        public static MyVector4 operator *(float f, MyVector4 v)
+        public static Vector4 operator *(float f, Vector4 v)
         {
-            return new MyVector4(f * v.X, f * v.Y, f * v.Z, f * v.W);
+            return new Vector4(f * v.X, f * v.Y, f * v.Z, f * v.W);
         }
-        public static MyVector4 operator *(MyVector4 u, float f)
+        public static Vector4 operator *(Vector4 u, float f)
         {
-            return new MyVector4(u.X * f, u.Y * f, u.Z * f, u.W * f);
+            return new Vector4(u.X * f, u.Y * f, u.Z * f, u.W * f);
         }
-        public static MyVector4 operator /(MyVector4 u, MyVector4 v)
+        public static Vector4 operator /(Vector4 u, Vector4 v)
         {
-            return new MyVector4(u.X / v.X, u.Y / v.Y, u.Z / v.Z, u.W / v.W);
+            return new Vector4(u.X / v.X, u.Y / v.Y, u.Z / v.Z, u.W / v.W);
         }
-        public static MyVector4 operator /(MyVector4 u, float f)
+        public static Vector4 operator /(Vector4 u, float f)
         {
-            return new MyVector4(u.X / f, u.Y / f, u.Z / f, u.W / f);
+            return new Vector4(u.X / f, u.Y / f, u.Z / f, u.W / f);
         }
 
-        public static bool operator ==(MyVector4 u, MyVector4 v)
+        public static bool operator ==(Vector4 u, Vector4 v)
         {
             return u.X == v.X && u.Y == v.Y && u.Z == v.Z && u.W == v.W;
         }
-        public static bool operator !=(MyVector4 u, MyVector4 v)
+        public static bool operator !=(Vector4 u, Vector4 v)
         {
             return u.X != v.X || u.Y != v.Y || u.Z != v.Z || u.W != v.W;
         }
 
-        public MyVector4 Normalize()
+        public Vector4 Normalize()
         {
             float len = Length();
-            return new MyVector4(X / len, Y / len, Z / len, W / len);
+            return new Vector4(X / len, Y / len, Z / len, W / len);
         }
 
         public float Length()
@@ -94,7 +94,7 @@ namespace Algorithm
                 return false;
             }
 
-            return this == (MyVector4)obj;
+            return this == (Vector4)obj;
         }
 
         public override int GetHashCode()

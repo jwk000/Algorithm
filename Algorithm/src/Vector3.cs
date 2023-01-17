@@ -6,73 +6,73 @@ using System.Threading.Tasks;
 
 namespace Algorithm
 {
-    public class MyVector3
+    public class Vector3
     {
         public float X;
         public float Y;
         public float Z;
 
-        public MyVector3(float x, float y, float z)
+        public Vector3(float x, float y, float z)
         {
             X = x;
             Y = y;
             Z = z;
         }
 
-        public static float Dot(MyVector3 u, MyVector3 v)
+        public static float Dot(Vector3 u, Vector3 v)
         {
             return u.X * v.X + u.Y * v.Y + u.Z * v.Z;
         }
 
-        public static MyVector3 Cross(MyVector3 u, MyVector3 v)
+        public static Vector3 Cross(Vector3 u, Vector3 v)
         {
-            return new MyVector3(u.Y * v.Z - v.Y * u.Z, v.X * u.Z - u.X * v.Z, u.X * v.Y - v.X * u.Y);
+            return new Vector3(u.Y * v.Z - v.Y * u.Z, v.X * u.Z - u.X * v.Z, u.X * v.Y - v.X * u.Y);
         }
 
-        public static MyVector3 operator +(MyVector3 u, MyVector3 v)
+        public static Vector3 operator +(Vector3 u, Vector3 v)
         {
-            return new MyVector3(u.X + v.X, u.Y + v.Y, u.Z + v.Z);
+            return new Vector3(u.X + v.X, u.Y + v.Y, u.Z + v.Z);
         }
 
-        public static MyVector3 operator -(MyVector3 u, MyVector3 v)
+        public static Vector3 operator -(Vector3 u, Vector3 v)
         {
-            return new MyVector3(u.X - v.X, u.Y - v.Y, u.Z - v.Z);
+            return new Vector3(u.X - v.X, u.Y - v.Y, u.Z - v.Z);
         }
 
-        public static MyVector3 operator *(MyVector3 u, MyVector3 v)
+        public static Vector3 operator *(Vector3 u, Vector3 v)
         {
-            return new MyVector3(u.X * v.X, u.Y * v.Y, u.Z * v.Z);
+            return new Vector3(u.X * v.X, u.Y * v.Y, u.Z * v.Z);
         }
-        public static MyVector3 operator *(float f, MyVector3 v)
+        public static Vector3 operator *(float f, Vector3 v)
         {
-            return new MyVector3(f * v.X, f * v.Y, f * v.Z);
+            return new Vector3(f * v.X, f * v.Y, f * v.Z);
         }
-        public static MyVector3 operator *(MyVector3 u, float f)
+        public static Vector3 operator *(Vector3 u, float f)
         {
-            return new MyVector3(u.X * f, u.Y * f, u.Z * f);
+            return new Vector3(u.X * f, u.Y * f, u.Z * f);
         }
-        public static MyVector3 operator /(MyVector3 u, MyVector3 v)
+        public static Vector3 operator /(Vector3 u, Vector3 v)
         {
-            return new MyVector3(u.X / v.X, u.Y / v.Y, u.Z / v.Z);
+            return new Vector3(u.X / v.X, u.Y / v.Y, u.Z / v.Z);
         }
-        public static MyVector3 operator /(MyVector3 u, float f)
+        public static Vector3 operator /(Vector3 u, float f)
         {
-            return new MyVector3(u.X / f, u.Y / f, u.Z / f);
+            return new Vector3(u.X / f, u.Y / f, u.Z / f);
         }
 
-        public static bool operator ==(MyVector3 u, MyVector3 v)
+        public static bool operator ==(Vector3 u, Vector3 v)
         {
             return u.X == v.X && u.Y == v.Y && u.Z == v.Z;
         }
-        public static bool operator !=(MyVector3 u, MyVector3 v)
+        public static bool operator !=(Vector3 u, Vector3 v)
         {
             return u.X != v.X || u.Y != v.Y || u.Z != v.Z;
         }
 
-        public MyVector3 Normalize()
+        public Vector3 Normalize()
         {
             float len = Length();
-            return new MyVector3(X / len, Y / len, Z / len);
+            return new Vector3(X / len, Y / len, Z / len);
         }
 
         public float Length()
@@ -97,7 +97,7 @@ namespace Algorithm
                 return false;
             }
 
-            return this == (MyVector3)obj;
+            return this == (Vector3)obj;
         }
 
         public override int GetHashCode()
