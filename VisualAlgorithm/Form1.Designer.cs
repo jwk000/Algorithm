@@ -40,6 +40,7 @@
             this.graphToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pathfinderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.voronoiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,8 +54,7 @@
             this.pathfinderToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(622, 25);
+            this.menuStrip1.Size = new System.Drawing.Size(800, 28);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -65,27 +65,27 @@
             this.michelSampleToolStripMenuItem,
             this.poissonSampleToolStripMenuItem});
             this.sampleToolStripMenuItem.Name = "sampleToolStripMenuItem";
-            this.sampleToolStripMenuItem.Size = new System.Drawing.Size(62, 21);
+            this.sampleToolStripMenuItem.Size = new System.Drawing.Size(75, 24);
             this.sampleToolStripMenuItem.Text = "sample";
             // 
             // randomSampleToolStripMenuItem
             // 
             this.randomSampleToolStripMenuItem.Name = "randomSampleToolStripMenuItem";
-            this.randomSampleToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.randomSampleToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.randomSampleToolStripMenuItem.Text = "random sample";
             this.randomSampleToolStripMenuItem.Click += new System.EventHandler(this.randomSampleToolStripMenuItem_Click);
             // 
             // michelSampleToolStripMenuItem
             // 
             this.michelSampleToolStripMenuItem.Name = "michelSampleToolStripMenuItem";
-            this.michelSampleToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.michelSampleToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.michelSampleToolStripMenuItem.Text = "michel sample";
             this.michelSampleToolStripMenuItem.Click += new System.EventHandler(this.michelSampleToolStripMenuItem_Click);
             // 
             // poissonSampleToolStripMenuItem
             // 
             this.poissonSampleToolStripMenuItem.Name = "poissonSampleToolStripMenuItem";
-            this.poissonSampleToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.poissonSampleToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.poissonSampleToolStripMenuItem.Text = "poisson sample";
             this.poissonSampleToolStripMenuItem.Click += new System.EventHandler(this.poissonSampleToolStripMenuItem_Click);
             // 
@@ -95,44 +95,53 @@
             this.kdtreeToolStripMenuItem,
             this.quadtreeToolStripMenuItem});
             this.treeToolStripMenuItem.Name = "treeToolStripMenuItem";
-            this.treeToolStripMenuItem.Size = new System.Drawing.Size(43, 21);
+            this.treeToolStripMenuItem.Size = new System.Drawing.Size(53, 24);
             this.treeToolStripMenuItem.Text = "tree";
             // 
             // kdtreeToolStripMenuItem
             // 
             this.kdtreeToolStripMenuItem.Name = "kdtreeToolStripMenuItem";
-            this.kdtreeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.kdtreeToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.kdtreeToolStripMenuItem.Text = "kdtree";
             this.kdtreeToolStripMenuItem.Click += new System.EventHandler(this.kdtreeToolStripMenuItem_Click);
             // 
             // quadtreeToolStripMenuItem
             // 
             this.quadtreeToolStripMenuItem.Name = "quadtreeToolStripMenuItem";
-            this.quadtreeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.quadtreeToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.quadtreeToolStripMenuItem.Text = "quadtree";
             this.quadtreeToolStripMenuItem.Click += new System.EventHandler(this.quadtreeToolStripMenuItem_Click);
             // 
             // graphToolStripMenuItem
             // 
+            this.graphToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.voronoiToolStripMenuItem});
             this.graphToolStripMenuItem.Name = "graphToolStripMenuItem";
-            this.graphToolStripMenuItem.Size = new System.Drawing.Size(55, 21);
+            this.graphToolStripMenuItem.Size = new System.Drawing.Size(66, 24);
             this.graphToolStripMenuItem.Text = "graph";
             // 
             // pathfinderToolStripMenuItem
             // 
             this.pathfinderToolStripMenuItem.Name = "pathfinderToolStripMenuItem";
-            this.pathfinderToolStripMenuItem.Size = new System.Drawing.Size(80, 21);
+            this.pathfinderToolStripMenuItem.Size = new System.Drawing.Size(99, 24);
             this.pathfinderToolStripMenuItem.Text = "pathfinder";
             this.pathfinderToolStripMenuItem.Click += new System.EventHandler(this.pathfinderToolStripMenuItem_Click);
             // 
+            // voronoiToolStripMenuItem
+            // 
+            this.voronoiToolStripMenuItem.Name = "voronoiToolStripMenuItem";
+            this.voronoiToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.voronoiToolStripMenuItem.Text = "voronoi";
+            this.voronoiToolStripMenuItem.Click += new System.EventHandler(this.voronoiToolStripMenuItem_Click);
+            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(622, 382);
+            this.ClientSize = new System.Drawing.Size(800, 449);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "Form1";
             this.Text = "Form1";
             this.menuStrip1.ResumeLayout(false);
@@ -155,5 +164,6 @@
         private ToolStripMenuItem pathfinderToolStripMenuItem;
         private ToolStripMenuItem quadtreeToolStripMenuItem;
         private System.Windows.Forms.Timer timer1;
+        private ToolStripMenuItem voronoiToolStripMenuItem;
     }
 }

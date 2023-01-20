@@ -11,7 +11,7 @@ namespace VisualAlgorithm
             this.DoubleBuffered = true;
             this.BackColor = Color.White;
             this.timer1.Tick += OnTick;
-            this.timer1.Interval = 100;
+            this.timer1.Interval = 30;
             this.timer1.Start();
         }
         Action mTickAction = null;
@@ -137,12 +137,12 @@ namespace VisualAlgorithm
             int ObjMinSize = 10;
             int ObjMaxSize = 30;
             this.ClientSize = new Size(Width, Height);
-            
+
             QuadTree qdtree = new QuadTree(5, 4, 0, Width, 0, Height);
             for (int i = 0; i < 80; i++)
             {
-                int x = randor.Next(Width-ObjMaxSize);
-                int y = randor.Next(Height-ObjMaxSize);
+                int x = randor.Next(Width - ObjMaxSize);
+                int y = randor.Next(Height - ObjMaxSize);
                 int w = randor.Next(ObjMinSize, ObjMaxSize);
                 int h = randor.Next(ObjMinSize, ObjMaxSize);
                 QuadTree.QTObject obj = new QuadTree.QTObject(x, y, w, h);
@@ -151,7 +151,7 @@ namespace VisualAlgorithm
             }
 
             mDrawAction = g => drawQuadTree(g, qdtree);
-            mTickAction = () => onTickQuadTree(qdtree,qdtree.AllObjects[1]);
+            mTickAction = () => onTickQuadTree(qdtree, qdtree.AllObjects[1]);
 
             Invalidate();
         }
@@ -163,7 +163,7 @@ namespace VisualAlgorithm
             int y = randor.Next(0, 10);
             obj.X += x;
             obj.Y += y;
-            if (obj.X+obj.W < 0)
+            if (obj.X + obj.W < 0)
             {
                 obj.X = 800;
             }
@@ -191,8 +191,8 @@ namespace VisualAlgorithm
             }
             var me = tree.AllObjects[1];
             g.FillRectangle(Brushes.Green, me.X, me.Y, me.W, me.H);
-            drawQTNode(g,tree.Root);
-            foreach(var o in tree.GetIntreastObjects(me))
+            drawQTNode(g, tree.Root);
+            foreach (var o in tree.GetIntreastObjects(me))
             {
                 g.FillRectangle(Brushes.Red, o.X, o.Y, o.W, o.H);
             }
@@ -207,7 +207,7 @@ namespace VisualAlgorithm
             int width = node.Right - node.Left;
             int height = node.Down - node.Up;
             Pen p = QuadTreePens[node.level];
-            g.DrawRectangle(p, node.Left, node.Up, width-1, height-1);
+            g.DrawRectangle(p, node.Left, node.Up, width - 1, height - 1);
             if (node.SubNodes != null)
             {
                 foreach (var n in node.SubNodes)
@@ -220,6 +220,61 @@ namespace VisualAlgorithm
                 g.DrawString(node.Objects.Count.ToString(), SystemFonts.DefaultFont, Brushes.Red, node.Left + width / 2, node.Up + height / 2);
 
             }
+
+        }
+
+        //维诺图
+        private void voronoiToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //随机30个点R，和30种颜色C，遍历所有像素P，找到P[i]距离R最近的点R[j]，取C[j]作为P[i]的颜色
+            int N = 30;
+            int W = 1024;
+            int H = 768;
+            ClientSize = new Size(W, H);
+            Point2[] R = new Point2[N];
+            Color[] C = new Color[N];
+            for (int i = 0; i < N; i++)
+            {
+                R[i] = new Point2(randor.Next(W), randor.Next(H));
+                C[i] = Color.FromArgb(randor.Next(255), randor.Next(255), randor.Next(255));
+            }
+            Bitmap bmp = new Bitmap(W, H);
+
+            mDrawAction = g => g.DrawImage(bmp, 0, 0);
+            mTickAction = () =>
+            {
+                for (int i = 0; i < N; i++)
+                {
+                    R[i].X += randor.Next(10) - 5;
+                    R[i].Y += randor.Next(10) - 5;
+                }
+
+                for (int x = 0; x < W; x++)
+                {
+                    for (int y = 0; y < H; y++)
+                    {
+                        float minDist = W * H;
+                        Color color = Color.AliceBlue;
+                        for (int i = 0; i < N; i++)
+                        {
+                            Point2 p = R[i];
+                            float d = (p.X - x) * (p.X - x) + (p.Y - y) * (p.Y - y);
+                            if (d < minDist)
+                            {
+                                minDist = d;
+                                color = C[i];
+                                //int cc = (int)minDist % 255;
+                                //int cc = (int)(R[i].X + R[i].Y) % 255;
+                                //color = Color.FromArgb(10, 100, cc);
+                            }
+                        }
+
+                        bmp.SetPixel(x, y, color);
+                    }
+                }
+
+                Invalidate();
+            };
 
         }
     }
