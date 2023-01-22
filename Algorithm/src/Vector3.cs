@@ -19,6 +19,12 @@ namespace Algorithm
             Z = z;
         }
 
+        public static Vector3 Zero = new Vector3(0, 0, 0);
+
+        public static float Distance(Vector3 left,Vector3 right)
+        {
+            return (left - right).Length();
+        }
         public static float Dot(Vector3 u, Vector3 v)
         {
             return u.X * v.X + u.Y * v.Y + u.Z * v.Z;
@@ -102,7 +108,7 @@ namespace Algorithm
 
         public override int GetHashCode()
         {
-            return (int)(X * 100000000 + Y*10000+Z);
+            return (int)(X * 100000000 + Y * 10000 + Z);
         }
     }
 }

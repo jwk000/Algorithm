@@ -16,7 +16,7 @@ namespace Algorithm
         public class KDNode
         {
             public int split;//切分维度
-            public System.Numerics.Vector2 data;//二维点
+            public Vector2 data;//二维点
             public KDNode left;
             public KDNode right;
         }
@@ -24,12 +24,12 @@ namespace Algorithm
         public KDNode Root;
         int K = 2;
 
-        public void Build(List<System.Numerics.Vector2> input)
+        public void Build(List<Vector2> input)
         {
             Root = BuildTree(input, 0);
         }
 
-        KDNode BuildTree(List<System.Numerics.Vector2> input, int split)
+        KDNode BuildTree(List<Vector2> input, int split)
         {
             if (input.Count == 0) return null;
             if (split == 0)
@@ -53,17 +53,17 @@ namespace Algorithm
         }
 
         //查找离目标点最近的点
-        public System.Numerics.Vector2 Search(System.Numerics.Vector2 target)
+        public Vector2 Search(Vector2 target)
         {
-            if (Root == null) return System.Numerics.Vector2.Zero;
+            if (Root == null) return Vector2.Zero;
             var p = SearchNode(Root, target, 0, out float d);
             return p.data;
         }
 
-        KDNode SearchNode(KDNode node, System.Numerics.Vector2 target, int split, out float distance)
+        KDNode SearchNode(KDNode node, Vector2 target, int split, out float distance)
         {
             int next = (split + 1) % K;
-            distance = System.Numerics.Vector2.Distance(node.data, target);
+            distance = Vector2.Distance(node.data, target);
             float dd;
             KDNode nn;
             if (split == 0)

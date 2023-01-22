@@ -17,6 +17,13 @@ namespace Algorithm
             Y = y;
         }
 
+        public static Vector2 Zero = new Vector2(0, 0);
+
+        public static float Distance(Vector2 left, Vector2 right)
+        {
+            return (left - right).Length();
+        }
+
         public static float Dot(Vector2 u, Vector2 v)
         {
             return u.X * v.X + u.Y * v.Y;
@@ -72,6 +79,7 @@ namespace Algorithm
         {
             return MathF.Sqrt(X * X + Y * Y);
         }
+
 
         public override string ToString()
         {
