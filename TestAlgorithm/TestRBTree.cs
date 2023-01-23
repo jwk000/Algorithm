@@ -25,7 +25,7 @@ namespace TestAlgorithm
 
             Assert.IsFalse(tree.Has(20));
 
-            Assert.IsTrue(tree.ToString() == "1|B 2|B 3|B 4|R 5|B 6|B 7|B 8|B 9|B 10|B 11|B 12|R 13|B 14|B 15|B 16|R 17|R 18|B 19|R");
+            Assert.IsTrue(tree.ToString() == "1B 2B 3B 4R 5B 6B 7B 8B 9B 10B 11B 12R 13B 14B 15B 16R 17R 18B 19R");
 
             //顺序删除节点
             for (int i = 1; i < 20; i++)
@@ -49,7 +49,7 @@ namespace TestAlgorithm
 
             Assert.IsFalse(tree.Has(20));
 
-            Assert.IsTrue(tree.ToString() == "1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19");
+            Assert.IsTrue(tree.ToString() == "1R 2B 3R 4R 5B 6B 7B 8R 9B 10B 11B 12B 13B 14B 15B 16R 17B 18B 19B");
 
             //倒序删除节点
             for (int i = 19; i > 0; i--)
@@ -82,8 +82,8 @@ namespace TestAlgorithm
 
 
             Assert.IsFalse(tree.Has(20));
-
-            Assert.IsTrue(tree.ToString() == "1 2 3 4 5 6 7 8 9 10 11 12 13 14");
+            
+            Assert.IsTrue(tree.ToString() == "1R 2B 3R 4B 5R 6B 7R 8B 9B 10R 11B 12R 13B 14B");
 
             //随机删除节点
             tree.Remove(2);
@@ -92,6 +92,7 @@ namespace TestAlgorithm
             tree.Remove(4);
             tree.Remove(11);
             tree.Remove(6);
+            Assert.IsTrue(tree.Has(5));
             tree.Remove(13);
             tree.Remove(8);
             tree.Remove(1);
@@ -100,7 +101,7 @@ namespace TestAlgorithm
             tree.Remove(7);
             tree.Remove(12);
             tree.Remove(5);
-
+            Assert.IsFalse(tree.Has(5));
         }
     }
 

@@ -15,6 +15,7 @@ namespace Algorithm
      *  5）对每个结点，从该结点到其子孙结点的所有路径上包含相同数目的黑结点。
      *  
      *  也就是说，红黑树的黑色节点数量最多是红色节点的2倍；
+     *  ref：https://blog.csdn.net/chenlong_cxy/article/details/121481859
      */
 
     public class RedBlackTree : IEnumerable
@@ -28,6 +29,7 @@ namespace Algorithm
             public int Value;
             public int Color;//0红色 1黑色
 
+
             public RBNode(int v, int color)
             {
                 Value = v;
@@ -36,13 +38,25 @@ namespace Algorithm
 
             public override string ToString()
             {
-                return $"{Value}|{(Color == 0 ? 'R' : 'B')}";
+                return $"{Value}{(Color == 0 ? 'R' : 'B')}";
             }
         }
+
+
 
         RBNode mRoot;
         const int RED = 0;
         const int BLACK = 1;
+
+        bool IsRed(RBNode node)
+        {
+            return node != null && node.Color == RED;
+        }
+
+        bool IsBlack(RBNode node)
+        {
+            return node == null || node.Color == BLACK;
+        }
 
         //I是当前节点，P是父节点，PP是祖父节点，S是叔叔节点
         public void Add(int val)
@@ -113,7 +127,7 @@ namespace Algorithm
                     S = PP.Right;
                 }
 
-                if (S != null && S.Color == RED) //4.1叔叔节点是红色，节点数量平衡，只改颜色即可
+                if (IsRed(S)) //4.1叔叔节点是红色，节点数量平衡，只改颜色即可
                 {
                     P.Color = BLACK;//父节点涂黑
                     S.Color = BLACK;//叔叔节点涂黑
@@ -218,6 +232,8 @@ namespace Algorithm
 
         }
 
+
+
         public void Remove(int val)
         {
             Console.WriteLine($"Remove({val})");
@@ -235,30 +251,37 @@ namespace Algorithm
         //I移除后会导致所在的子树不平衡，需要调整
         void Remove(RBNode I)
         {
-            RBNode P = I.Parent;
-            //1.I没有子节点，直接删除
+            //1.I没有子节点
             if (I.Left == null && I.Right == null)
             {
-                if (P.Left == I) { P.Left = null; }
-                else { P.Right = null; }
-                //1.1 I是红色，直接删除 I是黑色，需要平衡
+                if (I == mRoot)
+                {
+                    mRoot = null;
+                    return;
+                }
+                //删除红色节点不需要调整，删除黑色节点需要调整
                 if (I.Color == BLACK)
                 {
                     RemoveFix(I);
                 }
+                RBNode P = I.Parent;
+                if (P.Left == I) { P.Left = null; }
+                else { P.Right = null; }
                 return;
             }
             //2.I有一个子节点C，C替换I，删除C
             if (I.Left == null && I.Right != null)
             {
                 I.Value = I.Right.Value;
-                Remove(I.Right);
+                I.Left = I.Right.Left;
+                I.Right = I.Right.Right;
                 return;
             }
             if (I.Right == null && I.Left != null)
             {
                 I.Value = I.Left.Value;
-                Remove(I.Left);
+                I.Right = I.Left.Right;
+                I.Left = I.Left.Left;
                 return;
             }
             //3.I有2个子节点，I替换为后继节点N，删除N
@@ -271,84 +294,93 @@ namespace Algorithm
         void RemoveFix(RBNode I)
         {
             RBNode P = I.Parent;
-            if (P.Left == I) //1.2.1 I是左节点
+            if (P == null)
+            {
+                return;
+            }
+            if (P.Left == I) // I是左节点
             {
                 RBNode S = P.Right;
                 RBNode SR = S.Right;
                 RBNode SL = S.Left;
 
-                if (S.Color == RED) //1.2.1.1 S是红色，则P和SL，SR一定都是黑色
+                if (IsRed(S)) //情况1 S是红色，则P和SL，SR一定都是黑色
                 {
                     S.Color = BLACK;
                     P.Color = RED;
                     LeftRotate(P);
-                    P.Left = null;
+                    RemoveFix(I);//继续调整I，情况2
                 }
-                else //1.2.1.2 S是黑色
+                else //情况2 S是黑色
                 {
 
-                    if (SR != null && SR.Color == RED) //1.2.1.2.1 SR是红色
+                    if (IsRed(SR)) //情况2.1 SR是红色
                     {
                         S.Color = P.Color;
                         P.Color = BLACK;
                         SR.Color = BLACK;
-                        LeftRotate(P);
-                        P.Left = null;
+                        LeftRotate(P);//调整结束
                     }
-                    else if ((SR == null || SR.Color == BLACK) && (SL != null && SL.Color == RED)) // 1.2.1.2.2 SR黑色 SL红色
+                    else if (IsBlack(SR) && IsRed(SL)) // 情况2.2 SR黑色 SL红色
                     {
                         S.Color = RED;
                         SL.Color = BLACK;
                         RightRotate(S);
-                        Remove(I);
+                        RemoveFix(I);//继续调整I
                     }
-                    else //1.2.1.2.3 SL黑色 SR黑色
+                    else //情况2.3 SL黑色 SR黑色
                     {
                         S.Color = RED;
-                        P.Left = null;
-                        RemoveFix(P);
+                        if (IsRed(P))
+                        {
+                            P.Color = BLACK;//结束调整
+                        }
+                        else
+                        {
+                            RemoveFix(P);//向父节点调整
+                        }
                     }
                 }
             }
-            else //1.2.2 I是右节点
+            else // I是右节点
             {
-                //P.Right = null;
-                RBNode S = P.Right;
+                RBNode S = P.Left;
                 RBNode SR = S.Right;
                 RBNode SL = S.Left;
-                if (S.Color == RED)
+                if (IsRed(S))
                 {
                     S.Color = BLACK;
                     P.Color = RED;
                     RightRotate(P);
-                    P.Right = null;
+                    RemoveFix(I);
                 }
                 else
                 {
-                    if (SL == null && SR == null)
-                    {
-                        P.Right = null;//直接删除
-                        return;
-                    }
-                    if (SL.Color == RED)
+                    if (IsRed(SL))
                     {
                         S.Color = P.Color;
                         P.Color = BLACK;
                         SL.Color = BLACK;
                         RightRotate(P);
-                        P.Right = null;
                     }
-                    else if (SL.Color == BLACK && SR.Color == RED)
+                    else if (IsBlack(SL) && IsRed(SR))
                     {
                         S.Color = RED;
                         SR.Color = BLACK;
                         LeftRotate(S);
-                        Remove(I);
+                        RemoveFix(I);
                     }
                     else
                     {
                         S.Color = RED;
-                        Remove(P);
+                        if (IsRed(P))
+                        {
+                            P.Color = BLACK;
+                        }
+                        else
+                        {
+                            RemoveFix(P);
+                        }
                     }
                 }
             }
@@ -473,7 +505,7 @@ namespace Algorithm
                             if (st == 0)
                             {
 
-                                sb.Append(nodes[m].Value);
+                                sb.Append(nodes[m]);
                             }
                             else
                             {
