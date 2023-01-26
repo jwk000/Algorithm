@@ -11,7 +11,7 @@ namespace TestAlgorithm
     public class TestTrie
     {
         [TestMethod]
-        public void Test()
+        public void Test1()
         {
             Trie trie = new Trie();
             string text = "asdf this is a mao mao yu and that is not an orange goodbye deer girl";
@@ -24,5 +24,19 @@ namespace TestAlgorithm
             Assert.IsTrue(trie.HasString("girl"));
             Assert.IsFalse(trie.HasString("ma"));
         }
+
+        [TestMethod]
+        public void Test2()
+        {
+            Trie trie = new Trie();
+            trie.Add("his");
+            trie.Add("he");
+            trie.Add("her");
+            trie.Add("she");
+
+            Assert.IsTrue(trie.Match("ahisher"));
+
+        }
+
     }
 }

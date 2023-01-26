@@ -65,5 +65,25 @@ namespace Algorithm
             }
             return node.IsKey;
         }
+
+        public bool Match(string str)
+        {
+            TrieNode node = Root;
+            for (int i = 0; i < str.Length; i++)
+            {
+                if (node.Children == null || node.Children[str[i]] == null)
+                {
+                    continue;
+                }
+                node = node.Children[str[i]];
+
+                if (node.IsKey)
+                {
+                    return true;
+                }
+            }
+            return false;
+
+        }
     }
 }
