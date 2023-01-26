@@ -8,12 +8,12 @@ using Algorithm;
 namespace TestAlgorithm
 {
     [TestClass]
-    public class TestGraph
+    public class TestGraphAdjList
     {
         [TestMethod]
         public void TestToplogic()
         {
-            Graph G = new Graph(10);
+            GraphAdjList G = new GraphAdjList(10);
             G.AddEdge(6, 7, 1);
             G.AddEdge(6, 3, 1);
             G.AddEdge(3, 4, 1);

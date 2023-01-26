@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 namespace Algorithm
 {
     /*
-     * 有向无环图，用邻接链表表示
+     * 有向无环图DAG，用邻接链表表示
      * 
      */
-    public partial class Graph
+    public partial class GraphAdjList
     {
         //顶点
         class Vertex
@@ -29,7 +29,7 @@ namespace Algorithm
         Vertex[] G;//图
 
         //构造一个Num个顶点的图
-        public Graph(int vertexNum)
+        public GraphAdjList(int vertexNum)
         {
             G = new Vertex[vertexNum];
             for (int i = 0; i < vertexNum; i++)

@@ -14,7 +14,7 @@ namespace TestAlgorithm
         [TestMethod]
         public void TestMyQueue()
         {
-            MyQueue<int> queue = new MyQueue<int>();
+            NQueue<int> queue = new NQueue<int>();
 
             //enque
             for(int i = 0; i < 10; i++)
@@ -49,7 +49,7 @@ namespace TestAlgorithm
         [TestMethod]
         public void TestDequeue()
         {
-            Deque<int> deque = new Deque<int>();
+            DQueue<int> deque = new DQueue<int>();
 
             for(int i = 0; i < 12; i++)
             {

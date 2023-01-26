@@ -18,7 +18,7 @@ namespace Algorithm
      * 2. 从图中删除该顶点和所有以它为尾的弧（白话就是：删除所有和它有关的边）
      * 3. 重复上述两步，直至所有顶点输出，或者当前图中不存在无前驱的顶点为止，后者代表我们的有向图是有环的，因此，也可以通过拓扑排序来判断一个图是否有环。
      */
-    public partial class Graph
+    public partial class GraphAdjList
     {
         //实现为Graph类的方法
         public List<int> TopologicalSort()
