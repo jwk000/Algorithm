@@ -209,9 +209,49 @@ namespace Algorithm
          * 有 n 个物品和一个大小为 m 的背包. 给定数组 A 表示每个物品的大小和数组 V 表示每个物品的价值.问最多能装入背包的总价值是多大?
          * 
          */
-        public static int BackPackI(int[] A, int[] V, int M)
+        public static int BackPack01(int[] A, int[] V, int M)
         {
+            int n = A.Length;
+            bool[] visit = new bool[n];
+            return BP01(A, V, M, n, visit);
+        }
+        //递归搜索解法
+        static int BP01(int[] A, int[] V, int m, int n, bool[] visit)
+        {
+            for (int i = 0; i < n; i++)
+            {
+                int size = A[i];
+                int value = V[i];
+                if (!visit[i] && size <= m)
+                {
+                    visit[i] = true;
+                    int a = value + BP01(A, V, m - size, n, visit);
+                    int b = BP01(A, V, m, n, visit);
+                    return Math.Max(a, b);
+                }
+            }
             return 0;
+        }
+
+        //动态规划解法
+        public static int DP01(int[] Size, int[] Value, int m, int n)
+        {
+            int[,] dp = new int[n + 1, m + 1];
+            for (int i = 1; i <= n; i++)//i是第i个物品，从1开始
+            {
+                for (int j = 1; j <= m; j++)//j是剩余容量
+                {
+                    if (Size[i - 1] > j)
+                    {
+                        dp[i, j] = dp[i - 1, j];
+                    }
+                    else
+                    {
+                        dp[i, j] = Math.Max(dp[i - 1, j], dp[i - 1, j - Size[i - 1]] + Value[i - 1]);
+                    }
+                }
+            }
+            return dp[n, m];
         }
 
         /*
@@ -220,6 +260,14 @@ namespace Algorithm
          */
         public static int BackPackII(int[] A, int[] V, int M)
         {
+            int[] dp = new int[M + 1];
+            //for (int i = 1; i <= M; i++)
+            //{
+            //    for (int j = 0; j < A.Length; j++)
+            //    {
+            //        dp[i] = dp[i - 1]
+            //    }
+            //}
             return 0;
         }
 
@@ -247,9 +295,57 @@ namespace Algorithm
          * exention -> exection (将 'n' 替换为 'c')
          * exection -> execution (插入 'u')
          */
-        public static int EditDistance()
+        public static int EditDistance(List<char> word1, List<char> word2)
         {
+            int len = Math.Max(word1.Count, word2.Count);
+            for (int i = 0; i < len; i++)
+            {
+                if (i < word1.Count && i < word2.Count)
+                {
+                    if (word1[i] != word2[i])
+                    {
+                        int a = EDInsert(word1, word2, i);
+                        int b = EDDelete(word1, word2, i);
+                        int c = EDReplace(word1, word2, i);
+                        return Math.Min(a, Math.Min(b, c));
+                    }
+                }
+                else if (i == word1.Count)
+                {
+                    return len - word1.Count;//插入
+                }
+                else
+                {
+                    return len - word2.Count;//删除
+                }
+            }
             return 0;
+        }
+
+        static int EDInsert(List<char> word1, List<char> word2, int i)
+        {
+            word1.Insert(i, word2[i]);
+            int ans = 1 + EditDistance(word1, word2);
+            word1.RemoveAt(i);
+            return ans;
+        }
+
+        static int EDDelete(List<char> word1, List<char> word2, int i)
+        {
+            char c = word1[i];
+            word1.RemoveAt(i);
+            int ans = 1 + EditDistance(word1, word2);
+            word1.Insert(i, c);
+            return ans;
+        }
+
+        static int EDReplace(List<char> word1, List<char> word2, int i)
+        {
+            char c = word1[i];
+            word1[i] = word2[i];
+            int ans = 1 + EditDistance(word1, word2);
+            word1[i] = c;
+            return ans;
         }
 
 
@@ -266,7 +362,9 @@ namespace Algorithm
 
         /*
          * 博弈游戏
-         * 考虑一行n个硬币的值v1。vn，其中n为偶数。我们轮流与对手比赛。在每个回合中，玩家从一行中选择第一个或最后一个硬币，将其永久地从一行中移除，并接收硬币的价值。如果我们先走，确定我们能赢得的最大金额。
+         * 考虑一行n个硬币的值v1-vn，其中n为偶数。我们轮流与对手比赛。
+         * 在每个回合中，玩家从一行中选择第一个或最后一个硬币，将其永久地从一行中移除，并接收硬币的价值。
+         * 如果我们先走，确定我们能赢得的最大金额。
          * 注：对手和用户一样聪明。
          * 
          */

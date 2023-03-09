@@ -15,9 +15,9 @@ namespace TestAlgorithm
         [TestMethod]
         public void TestMakeChange()
         {
-            int[] coins = new[] {2,3,5 };
+            int[] coins = new[] { 2, 3, 5 };
             int amount = 12;
-            int ans = DynamicPrograming.MakeChange(coins,amount);
+            int ans = DynamicPrograming.MakeChange(coins, amount);
             Assert.IsTrue(ans == 3);
             amount = 11;
             ans = DynamicPrograming.MakeChange(coins, amount);
@@ -59,6 +59,29 @@ namespace TestAlgorithm
             int ans = DynamicPrograming.LongestCommonSubsequnce(a, b);
             Assert.IsTrue(ans == 4);
 
+        }
+
+        [TestMethod]
+        public void TestBackPackI()
+        {
+            int[] A = new[] { 1, 3, 5, 7, 2 };
+            int[] V = new[] { 4, 8, 6, 5, 3 };
+            int M = 10;
+            int ans = DynamicPrograming.BackPack01(A, V, M);
+            Assert.IsTrue(ans == 18);
+
+            int ans2 = DynamicPrograming.DP01(A, V, M, A.Length);
+            Assert.IsTrue(ans2 == 18);
+
+        }
+
+        [TestMethod]
+        public void TestEditDistance()
+        {
+            var word1 = "intention".ToList();
+            var word2 = "execution".ToList();
+            int ans = DynamicPrograming.EditDistance(word1, word2);
+            Assert.IsTrue(ans == 5);
         }
     }
 }
