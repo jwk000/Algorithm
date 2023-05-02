@@ -25,5 +25,10 @@ namespace Algorithm
         {
             return new Point3(lhs.X + rhs.X, lhs.Y + rhs.Y, lhs.Z + rhs.Z);
         }
+
+        public static float Distance(Point3 lhs,Point3 rhs)
+        {
+            return (lhs - rhs).Length();
+        }
     }
 }
