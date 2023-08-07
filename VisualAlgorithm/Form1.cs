@@ -15,6 +15,8 @@ namespace VisualAlgorithm
         }
         Action mTickAction = null;
         Action<Graphics> mDrawAction = null;
+        Action<MouseEventArgs> mOnClickAction;
+        Action<MouseEventArgs> mOnMouseMove;
 
         private void OnTick(object? sender, EventArgs e)
         {
@@ -30,6 +32,26 @@ namespace VisualAlgorithm
             if (mDrawAction != null)
             {
                 mDrawAction.Invoke(e.Graphics);
+            }
+        }
+
+        protected override void OnMouseClick(MouseEventArgs e)
+        {
+            base.OnMouseClick(e);
+
+            if (mOnClickAction != null)
+            {
+                mOnClickAction(e);
+            }
+        }
+
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+
+            if(mOnMouseMove != null)
+            {
+                mOnMouseMove(e);
             }
         }
 
@@ -273,6 +295,54 @@ namespace VisualAlgorithm
                 }
 
                 Invalidate();
+            };
+
+        }
+
+        List<Point> mBezierCtrlPts = new List<Point>();
+
+        private void bezierCurveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            mBezierCtrlPts.Clear();
+            mOnClickAction = e =>
+            {
+                if (e.Button == MouseButtons.Left)
+                {
+                    mBezierCtrlPts.Add(e.Location);
+                    if (mBezierCtrlPts.Count > 1)
+                    {
+                        mDrawAction = g => g.DrawLines(Pens.Black, mBezierCtrlPts.ToArray());
+                        Invalidate();
+                    }
+                }
+                else if (e.Button == MouseButtons.Right)
+                {
+                    mOnMouseMove = null;
+                    BezierCurve bc = new BezierCurve();
+                    mDrawAction = g =>
+                    {
+                        g.DrawLines(Pens.Black, mBezierCtrlPts.ToArray());
+
+                        List<Vector2> ctrls = mBezierCtrlPts.Select(p => new Vector2(p.X, p.Y)).ToList();
+                        List<PointF> points = bc.DrawBezier(ctrls).Select(v => new PointF(v.X, v.Y)).ToList();
+                        g.DrawLines(Pens.IndianRed, points.ToArray());
+
+                        //g.DrawBeziers(Pens.Green, mBezierCtrlPts.ToArray());
+                    };
+                    Invalidate();
+                }
+            };
+
+            mOnMouseMove = e =>
+            {
+                List<Point> pts = new List<Point>();
+                if (mBezierCtrlPts.Count > 0)
+                {
+                    pts.AddRange(mBezierCtrlPts);
+                    pts.Add(e.Location);
+                    mDrawAction = g => g.DrawLines(Pens.Black, pts.ToArray());
+                    Invalidate();
+                }
             };
 
         }
