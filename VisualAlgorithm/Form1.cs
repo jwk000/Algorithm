@@ -1,4 +1,5 @@
 using Algorithm;
+using System.Data.Common;
 
 namespace VisualAlgorithm
 {
@@ -13,25 +14,28 @@ namespace VisualAlgorithm
             this.timer1.Interval = 30;
             this.timer1.Start();
         }
-        Action mTickAction = null;
-        Action<Graphics> mDrawAction = null;
-        Action<MouseEventArgs> mOnClickAction;
+        Action mOnTick;
+        Action<Graphics> mOnPaint;
+        Action<MouseEventArgs> mOnMouseClick;
         Action<MouseEventArgs> mOnMouseMove;
+        Action<MouseEventArgs> mOnMouseUp;
+        Action<MouseEventArgs> mOnMouseDown;
+        Action<MouseEventArgs> mOnMouseWheel;
 
         private void OnTick(object? sender, EventArgs e)
         {
-            if (mTickAction != null)
+            if (mOnTick != null)
             {
-                mTickAction();
+                mOnTick();
             }
         }
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
 
-            if (mDrawAction != null)
+            if (mOnPaint != null)
             {
-                mDrawAction.Invoke(e.Graphics);
+                mOnPaint.Invoke(e.Graphics);
             }
         }
 
@@ -39,9 +43,9 @@ namespace VisualAlgorithm
         {
             base.OnMouseClick(e);
 
-            if (mOnClickAction != null)
+            if (mOnMouseClick != null)
             {
-                mOnClickAction(e);
+                mOnMouseClick(e);
             }
         }
 
@@ -54,13 +58,30 @@ namespace VisualAlgorithm
                 mOnMouseMove(e);
             }
         }
+        protected override void OnMouseUp(MouseEventArgs e)
+        {
+            base.OnMouseUp(e);
+            if (mOnMouseUp != null)
+            {
+                mOnMouseUp.Invoke(e);
+            }
+        }
+
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            base.OnMouseDown(e);
+            if (mOnMouseDown != null)
+            {
+                mOnMouseDown.Invoke(e);
+            }
+        }
 
         private void michelSampleToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Sample sample = new Sample();
             var ret = sample.MichellSample(ClientRectangle.Width, ClientRectangle.Height, 1000);
 
-            mDrawAction = g =>
+            mOnPaint = g =>
             {
                 foreach (var p in ret)
                 {
@@ -76,7 +97,7 @@ namespace VisualAlgorithm
             Sample sample = new Sample();
             var ret = sample.RandomSample(ClientRectangle.Width, ClientRectangle.Height, 1000);
 
-            mDrawAction = g =>
+            mOnPaint = g =>
             {
                 foreach (var p in ret)
                 {
@@ -93,7 +114,7 @@ namespace VisualAlgorithm
             Sample sample = new Sample();
             var ret = sample.PoissonDiscSample(ClientRectangle.Width, ClientRectangle.Height, 1000);
 
-            mDrawAction = g =>
+            mOnPaint = g =>
             {
                 foreach (var p in ret)
                 {
@@ -120,7 +141,7 @@ namespace VisualAlgorithm
             kdtree.Build(input);
 
             //×ø±ê·Å´ó100±¶
-            mDrawAction = g => drawKDNode(g, kdtree.Root, 10, 800, 10, 700);
+            mOnPaint = g => drawKDNode(g, kdtree.Root, 10, 800, 10, 700);
             Invalidate();
         }
 
@@ -171,8 +192,8 @@ namespace VisualAlgorithm
                 qdtree.AddObject(obj);
             }
 
-            mDrawAction = g => drawQuadTree(g, qdtree);
-            mTickAction = () => onTickQuadTree(qdtree, qdtree.AllObjects[1]);
+            mOnPaint = g => drawQuadTree(g, qdtree);
+            mOnTick = () => onTickQuadTree(qdtree, qdtree.AllObjects[1]);
 
             Invalidate();
         }
@@ -261,8 +282,8 @@ namespace VisualAlgorithm
             }
             Bitmap bmp = new Bitmap(W, H);
 
-            mDrawAction = g => g.DrawImage(bmp, 0, 0);
-            mTickAction = () =>
+            mOnPaint = g => g.DrawImage(bmp, 0, 0);
+            mOnTick = () =>
             {
                 for (int i = 0; i < N; i++)
                 {
@@ -299,19 +320,19 @@ namespace VisualAlgorithm
 
         }
 
+        //±´Èû¶ûÇúÏß
         List<Point> mBezierCtrlPts = new List<Point>();
-
         private void bezierCurveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             mBezierCtrlPts.Clear();
-            mOnClickAction = e =>
+            mOnMouseClick = e =>
             {
                 if (e.Button == MouseButtons.Left)
                 {
                     mBezierCtrlPts.Add(e.Location);
                     if (mBezierCtrlPts.Count > 1)
                     {
-                        mDrawAction = g => g.DrawLines(Pens.Black, mBezierCtrlPts.ToArray());
+                        mOnPaint = g => g.DrawLines(Pens.Black, mBezierCtrlPts.ToArray());
                         Invalidate();
                     }
                 }
@@ -319,7 +340,7 @@ namespace VisualAlgorithm
                 {
                     mOnMouseMove = null;
                     BezierCurve bc = new BezierCurve();
-                    mDrawAction = g =>
+                    mOnPaint = g =>
                     {
                         g.DrawLines(Pens.Black, mBezierCtrlPts.ToArray());
 
@@ -340,19 +361,22 @@ namespace VisualAlgorithm
                 {
                     pts.AddRange(mBezierCtrlPts);
                     pts.Add(e.Location);
-                    mDrawAction = g => g.DrawLines(Pens.Black, pts.ToArray());
+                    mOnPaint = g => g.DrawLines(Pens.Black, pts.ToArray());
                     Invalidate();
                 }
             };
 
         }
 
+        //Éþ×ÓÄ£Äâ
+        int mDragState = 0;//0Î´ÍÏ×§ 1ÍÏ×§ÖÐ 
+
         private void ropeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MassSpringSystem rope = new MassSpringSystem();
             rope.Init();
 
-            mDrawAction = g =>
+            mOnPaint = g =>
             {
                 List<PointF> pts = rope.GetPoints().Select(p => new PointF(p.X, p.Y)).ToList();
                 foreach (PointF p in pts)
@@ -362,10 +386,35 @@ namespace VisualAlgorithm
                 g.DrawLines(Pens.Black, pts.ToArray());
             };
 
-            mTickAction = () =>
+            mOnTick = () =>
             {
                 rope.Update(0.1f);
                 Invalidate();
+            };
+
+            mOnMouseDown = e =>
+            {
+                MassPoint mp = rope.massPoints[0];
+                Vector2 ep = new Vector2(e.X, e.Y);
+                Vector2 me = ep - mp.position;
+                if (me.Length() < 10)
+                {
+                    mDragState = 1;
+                }
+            };
+
+            mOnMouseUp = e =>
+            {
+                if (mDragState == 1) { mDragState = 0; }
+            };
+
+            mOnMouseMove = e =>
+            {
+                if (mDragState == 1)
+                {
+                    rope.massPoints[0].position = new Vector2(e.X, e.Y);
+                    rope.Update(0.1f);
+                }
             };
         }
     }

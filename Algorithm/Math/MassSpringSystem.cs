@@ -49,7 +49,7 @@ namespace Algorithm
         const float Ox = 500;
         const float Oy = 100;
         const float Rest = 50;
-        const float Ks = 800;
+        const float Ks = 300;
         const float Kd = 0.8f;//内部阻尼
         const float Damping = 0.5f;//空气阻尼
         public void Init()
