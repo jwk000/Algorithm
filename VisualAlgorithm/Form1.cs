@@ -49,7 +49,7 @@ namespace VisualAlgorithm
         {
             base.OnMouseMove(e);
 
-            if(mOnMouseMove != null)
+            if (mOnMouseMove != null)
             {
                 mOnMouseMove(e);
             }
@@ -345,6 +345,28 @@ namespace VisualAlgorithm
                 }
             };
 
+        }
+
+        private void ropeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MassSpringSystem rope = new MassSpringSystem();
+            rope.Init();
+
+            mDrawAction = g =>
+            {
+                List<PointF> pts = rope.GetPoints().Select(p => new PointF(p.X, p.Y)).ToList();
+                foreach (PointF p in pts)
+                {
+                    g.DrawEllipse(Pens.Red, new RectangleF(p, new Size(5, 5)));
+                }
+                g.DrawLines(Pens.Black, pts.ToArray());
+            };
+
+            mTickAction = () =>
+            {
+                rope.Update(0.1f);
+                Invalidate();
+            };
         }
     }
 }

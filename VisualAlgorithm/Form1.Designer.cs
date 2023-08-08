@@ -40,16 +40,18 @@
             graphToolStripMenuItem = new ToolStripMenuItem();
             voronoiToolStripMenuItem = new ToolStripMenuItem();
             pathfinderToolStripMenuItem = new ToolStripMenuItem();
-            timer1 = new System.Windows.Forms.Timer(components);
             bezierToolStripMenuItem = new ToolStripMenuItem();
             bezierCurveToolStripMenuItem = new ToolStripMenuItem();
+            timer1 = new System.Windows.Forms.Timer(components);
+            massspringToolStripMenuItem = new ToolStripMenuItem();
+            ropeToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // menuStrip1
             // 
             menuStrip1.ImageScalingSize = new Size(20, 20);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { sampleToolStripMenuItem, treeToolStripMenuItem, graphToolStripMenuItem, pathfinderToolStripMenuItem, bezierToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { sampleToolStripMenuItem, treeToolStripMenuItem, graphToolStripMenuItem, pathfinderToolStripMenuItem, bezierToolStripMenuItem, massspringToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Padding = new Padding(5, 2, 0, 2);
@@ -67,21 +69,21 @@
             // randomSampleToolStripMenuItem
             // 
             randomSampleToolStripMenuItem.Name = "randomSampleToolStripMenuItem";
-            randomSampleToolStripMenuItem.Size = new Size(180, 22);
+            randomSampleToolStripMenuItem.Size = new Size(168, 22);
             randomSampleToolStripMenuItem.Text = "random sample";
             randomSampleToolStripMenuItem.Click += randomSampleToolStripMenuItem_Click;
             // 
             // michelSampleToolStripMenuItem
             // 
             michelSampleToolStripMenuItem.Name = "michelSampleToolStripMenuItem";
-            michelSampleToolStripMenuItem.Size = new Size(180, 22);
+            michelSampleToolStripMenuItem.Size = new Size(168, 22);
             michelSampleToolStripMenuItem.Text = "michel sample";
             michelSampleToolStripMenuItem.Click += michelSampleToolStripMenuItem_Click;
             // 
             // poissonSampleToolStripMenuItem
             // 
             poissonSampleToolStripMenuItem.Name = "poissonSampleToolStripMenuItem";
-            poissonSampleToolStripMenuItem.Size = new Size(180, 22);
+            poissonSampleToolStripMenuItem.Size = new Size(168, 22);
             poissonSampleToolStripMenuItem.Text = "poisson sample";
             poissonSampleToolStripMenuItem.Click += poissonSampleToolStripMenuItem_Click;
             // 
@@ -116,7 +118,7 @@
             // voronoiToolStripMenuItem
             // 
             voronoiToolStripMenuItem.Name = "voronoiToolStripMenuItem";
-            voronoiToolStripMenuItem.Size = new Size(180, 22);
+            voronoiToolStripMenuItem.Size = new Size(121, 22);
             voronoiToolStripMenuItem.Text = "voronoi";
             voronoiToolStripMenuItem.Click += voronoiToolStripMenuItem_Click;
             // 
@@ -137,9 +139,23 @@
             // bezierCurveToolStripMenuItem
             // 
             bezierCurveToolStripMenuItem.Name = "bezierCurveToolStripMenuItem";
-            bezierCurveToolStripMenuItem.Size = new Size(180, 22);
+            bezierCurveToolStripMenuItem.Size = new Size(147, 22);
             bezierCurveToolStripMenuItem.Text = "bezier curve";
             bezierCurveToolStripMenuItem.Click += bezierCurveToolStripMenuItem_Click;
+            // 
+            // massspringToolStripMenuItem
+            // 
+            massspringToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { ropeToolStripMenuItem });
+            massspringToolStripMenuItem.Name = "massspringToolStripMenuItem";
+            massspringToolStripMenuItem.Size = new Size(87, 21);
+            massspringToolStripMenuItem.Text = "massspring";
+            // 
+            // ropeToolStripMenuItem
+            // 
+            ropeToolStripMenuItem.Name = "ropeToolStripMenuItem";
+            ropeToolStripMenuItem.Size = new Size(180, 22);
+            ropeToolStripMenuItem.Text = "rope";
+            ropeToolStripMenuItem.Click += ropeToolStripMenuItem_Click;
             // 
             // Form1
             // 
@@ -173,5 +189,7 @@
         private ToolStripMenuItem voronoiToolStripMenuItem;
         private ToolStripMenuItem bezierToolStripMenuItem;
         private ToolStripMenuItem bezierCurveToolStripMenuItem;
+        private ToolStripMenuItem massspringToolStripMenuItem;
+        private ToolStripMenuItem ropeToolStripMenuItem;
     }
 }
