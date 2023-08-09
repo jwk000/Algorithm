@@ -374,16 +374,16 @@ namespace VisualAlgorithm
         private void ropeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MassSpringSystem rope = new MassSpringSystem();
-            rope.Init();
+            rope.MakeRope();
 
             mOnPaint = g =>
             {
                 List<PointF> pts = rope.GetPoints().Select(p => new PointF(p.X, p.Y)).ToList();
+                g.DrawLines(Pens.Black, pts.ToArray());
                 foreach (PointF p in pts)
                 {
-                    g.DrawEllipse(Pens.Red, new RectangleF(p, new Size(5, 5)));
+                    g.FillEllipse(Brushes.Red, new RectangleF(new PointF(p.X - 2, p.Y - 2), new Size(5, 5)));
                 }
-                g.DrawLines(Pens.Black, pts.ToArray());
             };
 
             mOnTick = () =>
@@ -416,6 +416,36 @@ namespace VisualAlgorithm
                     rope.Update(0.1f);
                 }
             };
+        }
+
+        private void ballToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MassSpringSystem ball = new MassSpringSystem();
+            ball.MakeBall();
+
+            mOnPaint = g =>
+            {
+                foreach(Edge e in ball.GetEdges())
+                {
+                    g.DrawLine(Pens.Blue, new PointF(e.c.X, e.c.Y), new PointF(e.d.X, e.d.Y));
+                }
+                List<PointF> pts = ball.GetPoints().Select(p => new PointF(p.X, p.Y)).ToList();
+                foreach(Spring s in ball.GetSprings())
+                {
+                    g.DrawLine(Pens.Black, pts[s.a], pts[s.b]);
+                }
+                foreach (PointF p in pts)
+                {
+                    g.FillEllipse(Brushes.Red, new RectangleF(new PointF(p.X - 2, p.Y - 2), new Size(5, 5)));
+                }
+            };
+
+            mOnTick = () =>
+            {
+                ball.Update(0.1f);
+                Invalidate();
+            };
+
         }
     }
 }

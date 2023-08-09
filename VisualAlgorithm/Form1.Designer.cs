@@ -42,9 +42,10 @@
             pathfinderToolStripMenuItem = new ToolStripMenuItem();
             bezierToolStripMenuItem = new ToolStripMenuItem();
             bezierCurveToolStripMenuItem = new ToolStripMenuItem();
-            timer1 = new System.Windows.Forms.Timer(components);
             massspringToolStripMenuItem = new ToolStripMenuItem();
             ropeToolStripMenuItem = new ToolStripMenuItem();
+            timer1 = new System.Windows.Forms.Timer(components);
+            ballToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -145,7 +146,7 @@
             // 
             // massspringToolStripMenuItem
             // 
-            massspringToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { ropeToolStripMenuItem });
+            massspringToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { ropeToolStripMenuItem, ballToolStripMenuItem });
             massspringToolStripMenuItem.Name = "massspringToolStripMenuItem";
             massspringToolStripMenuItem.Size = new Size(87, 21);
             massspringToolStripMenuItem.Text = "massspring";
@@ -156,6 +157,13 @@
             ropeToolStripMenuItem.Size = new Size(180, 22);
             ropeToolStripMenuItem.Text = "rope";
             ropeToolStripMenuItem.Click += ropeToolStripMenuItem_Click;
+            // 
+            // ballToolStripMenuItem
+            // 
+            ballToolStripMenuItem.Name = "ballToolStripMenuItem";
+            ballToolStripMenuItem.Size = new Size(180, 22);
+            ballToolStripMenuItem.Text = "ball";
+            ballToolStripMenuItem.Click += ballToolStripMenuItem_Click;
             // 
             // Form1
             // 
@@ -191,5 +199,6 @@
         private ToolStripMenuItem bezierCurveToolStripMenuItem;
         private ToolStripMenuItem massspringToolStripMenuItem;
         private ToolStripMenuItem ropeToolStripMenuItem;
+        private ToolStripMenuItem ballToolStripMenuItem;
     }
 }
