@@ -3,7 +3,7 @@
 using System.Text;
 namespace Algorithm;
 
-class Poker
+class Poker24
 {
     static char[] opchar = new char[] { '+', '-', '*', '/' };
     static Func<int, int, int>[] opfunc = new Func<int, int, int>[]
@@ -120,7 +120,7 @@ class Poker
     public void Test()
     {
 
-        Poker p = new Poker();
+        Poker24 p = new Poker24();
         int[] arr = new[] { 2, 3, 12, 12 };
         List<Node> list = new List<Node>();
         foreach (int a in arr)
