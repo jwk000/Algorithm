@@ -68,19 +68,18 @@ namespace Algorithm
         {
             int[] dp = new int[amount + 1];
             for (int i = 0; i < amount + 1; i++) dp[i] = -1;
-            dp2(coins, amount, dp, 0, 0);
-
+            DP2(coins, amount, dp, 0, 0);
             return dp[amount];
         }
 
-        void dp2(int[] coins, int amount, int[] dp, int v, int n)
+        void DP2(int[] coins, int amount, int[] dp, int v, int n)
         {
             if (dp[v] == -1 || dp[v] > n) dp[v] = n;
             foreach (int c in coins)
             {
                 if (v + c <= amount)
                 {
-                    dp2(coins, amount, dp, v + c, n + 1);
+                    DP2(coins, amount, dp, v + c, n + 1);
                 }
             }
         }
@@ -153,7 +152,6 @@ namespace Algorithm
             }
 
             return cache[amount];
-
         }
 
         //dfs
